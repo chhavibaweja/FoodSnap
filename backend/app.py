@@ -3,6 +3,8 @@ from flask_cors import CORS
 import os, json
 from dotenv import load_dotenv
 import google.generativeai as genai  # Gemini import
+import os 
+from app import app 
 
 load_dotenv()
 
@@ -11,8 +13,9 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 app = Flask(
     __name__,
-    template_folder=os.path.join(BASE_DIR, "frontend", "templates"),
-    static_folder=os.path.join(BASE_DIR, "frontend", "static")
+    # template_folder=os.path.join(BASE_DIR, "frontend", "templates"),
+    # static_folder=os.path.join(BASE_DIR, "frontend", "static")
+    app = Flask(__name__, template_folder="frontend/templates", static_folder="frontend/static")
 )
 CORS(app)
 
@@ -86,4 +89,5 @@ def analyze_food():
 
 # === Run the app ===
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
