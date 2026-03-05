@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | FoodSnap</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">🥗 FoodSnap</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('history') }}">History</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="about-container">
+      <h1>About FoodSnap</h1>
+      <p>
+        FoodSnap is a smart nutrition analyzer that helps you understand your food better.
+        Simply enter a food name, and it instantly tells you the calories, protein, carbs, and fat!
+      </p>
+      <p>
+        This project is designed to promote mindful eating and make nutrition tracking simple,
+        fun, and accessible to everyone.
+      </p>
+      <h3>Features</h3>
+      <ul>
+        <li>Instant food nutrition details</li>
+        <li>Modern, responsive design</li>
+        <li>Easy-to-use interface</li>
+        <li>AI-powered food analysis</li>
+        <li>Food search history tracking</li>
+        <li>Delete individual history items</li>
+        <li>Clear entire search history</li>
+        <li>Local storage support to save user history</li>
+      </ul>
+      <h3>Built With</h3>
+      <p>HTML, CSS, JavaScript, Flask (Python), Google Gemini API and Browser Local Storage</p>
+      <h3>What FoodSnap Does</h3>
+      <p>FoodSnap allows users to quickly check the nutritional value of different foods and keeps a record of
+        previously searched items so users can easily review or manage their past searches.</p>
+
+      <a href="/" class="primary-btn">Back to Home</a>
+    </div>
+  </section>
+</body>
+
+</html>

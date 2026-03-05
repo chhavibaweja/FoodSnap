@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoodSnap – Nutrition Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">🥗 FoodSnap</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('history') }}">History</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Analyze Your Food in Seconds 🍱</h1>
+      <p>Enter your food name to get calories, carbs, and protein instantly.</p>
+      <button class="primary-btn" id="getStartedBtn">Get Started</button>
+    </div>
+    <div class="hero-image">
+      <img src="https://cdn-icons-png.flaticon.com/512/2927/2927347.png" alt="Healthy Food" />
+    </div>
+  </section>
+
+  <!-- Modal Section (same as before) -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>🍎 Food Nutrition Analyzer</h2>
+
+      <div class="input-section">
+        <input type="text" id="foodInput" placeholder="Enter a food item (e.g., Banana)" />
+        <button class="analyze-btn" id="analyzeBtn">Analyze</button>
+      </div>
+
+      <div class="result-card" id="resultCard">
+        <h3>Nutrition Details</h3>
+        <p>Calories: <span id="calories">--</span></p>
+        <p>Protein: <span id="protein">--</span></p>
+        <p>Carbs: <span id="carbs">--</span></p>
+        <p>Fat: <span id="fat">--</span></p>
+
+        <button id="newFoodBtn">Analyze Another Food</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+</html>

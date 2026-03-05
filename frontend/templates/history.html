@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>History | FoodSnap</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- Navbar -->
+<header class="navbar">
+ <div class="logo">🥗 FoodSnap</div>
+ <nav>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('history') }}">History</a></li>
+      </ul>
+ </nav>
+</header>
+
+<section class="history-section">
+
+<div class="history-container">
+
+<h1>Search History</h1>
+
+<table class="history-table">
+
+<thead>
+<tr>
+<th>Food</th>
+<th>Nutrition Result</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="historyTable">
+</tbody>
+
+</table>
+
+<button class="clear-btn" onclick="clearHistory()">Clear History</button>
+
+<script src="{{ url_for('static', filename='history.js') }}"></script>
+
+</body>
+</html>
