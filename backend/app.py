@@ -1,22 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
-import os, json
+import os, json, re
 from dotenv import load_dotenv
-import google.generativeai as genai  # Gemini import
-import os 
-from app import app 
+import google.generativeai as genai
 
 load_dotenv()
 
-# === Setup paths for templates and static folders ===
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+# === Setup Flask ===
+app = Flask(__name__, template_folder="../frontend/templates", static_folder="../frontend/static")
 
-app = Flask(
-    __name__,
-    # template_folder=os.path.join(BASE_DIR, "frontend", "templates"),
-    # static_folder=os.path.join(BASE_DIR, "frontend", "static")
-    app = Flask(__name__, template_folder="frontend/templates", static_folder="frontend/static")
-)
 CORS(app)
 
 # === Configure Gemini API ===
@@ -28,14 +20,12 @@ def home():
     return render_template("index.html")
 
 # === About page ===
-
 @app.route("/about")
 def about():
     return render_template("about.html")
 
 # === History page ===
-
-@app.route('/history')
+@app.route("/history")
 def history():
     return render_template("history.html")
 
@@ -51,7 +41,7 @@ def analyze_food():
     try:
         prompt = f"""
         You are a food nutrition expert. Give approximate nutritional information for "{food_name}".
-        Respond ONLY in valid JSON format, like this (no markdown, no text outside JSON):
+        Respond ONLY in valid JSON format:
         {{
           "calories": "210 kcal",
           "protein": "5 g",
@@ -60,34 +50,25 @@ def analyze_food():
         }}
         """
 
-        # --- Call Gemini ---
-        model = genai.GenerativeModel("gemini-2.5-flash")  
+        model = genai.GenerativeModel("gemini-2.5-flash")
         response = model.generate_content(prompt)
         reply = response.text.strip()
 
-        print("Gemini raw reply:\n", reply)  # print the selected output in your terminal
+        print("Gemini raw reply:", reply)
 
-        # Try parsing JSON response
-        import re, json
+        clean_reply = re.sub(r"^```(?:json)?|```$", "", reply).strip()
 
-        # Remove Markdown code block if present (```json ... ```)
-        clean_reply = re.sub(r"^```(?:json)?|```$", "", reply, flags=re.MULTILINE).strip()
-        # Extract JSON from the cleaned reply
-        json_text = re.search(r"\{.*\}", clean_reply, re.DOTALL)
-        
         try:
-            nutrition_data = json.loads(reply)
-        except json.JSONDecodeError:
-            nutrition_data = {"raw_response": reply}
+            nutrition_data = json.loads(clean_reply)
+        except:
+            nutrition_data = {"raw_response": clean_reply}
 
         return jsonify(nutrition_data)
 
     except Exception as e:
-        print("Error:", e)
         return jsonify({"error": str(e)}), 500
 
 
 # === Run the app ===
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
